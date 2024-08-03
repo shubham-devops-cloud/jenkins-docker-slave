@@ -41,6 +41,15 @@ RUN curl -fsSL https://get.docker.com -o get-docker.sh && \
 RUN /get-docker.sh
 RUN usermod -aG docker jenkins
 
+#install helm
+RUN curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 && \
+    chmod 700 get_helm.sh
+RUN /get_helm.sh
+
+#install kubectl
+RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
+    install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
 #aws-cli install
 RUN apt-get install zip unzip && \
     curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
